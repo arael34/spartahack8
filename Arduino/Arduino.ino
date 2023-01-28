@@ -52,14 +52,8 @@ void loop() {
   int button_state = digitalRead(BUTTONPIN);
   // int rotary_value = analogRead(ROTARYPIN) % 4;
   if (button_state != previous_button_state && button_state == HIGH) {
-    // could be cleaned up with ternary
-    if (mode < MODECOUNT) {
-      ++mode;
-      u8x8.clear();
-    }
-    else {
-      mode = 1;
-    }
+    mode = mode < MODECOUNT ? mode + 1 : 1;
+    u8x8.clear();
   }
 
   u8x8.setFont(u8x8_font_chroma48medium8_r);
