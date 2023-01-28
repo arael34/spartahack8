@@ -33,6 +33,8 @@ void setup() {
     // pin modes
     pinMode(BUTTONPIN, INPUT);
     pinMode(DHTPIN, INPUT); // maybe INPUT_PULLOUT?
+    pinMode(SOUNDPIN, INPUT);
+    pinMode(LIGHTPIN, INPUT);
 
     // initializations
     Serial.begin(9600);
@@ -55,28 +57,44 @@ void loop() {
             mode = 1;
         } // this could be cleaner with ternary
         delay(1000);
-    } 
-
-    // int sound_state = analogRead(SOUNDPIN);
-    // int light_state = analogRead(LIGHTPIN);
-
-    // float pressure; bmp280.getTemperature();
+    }
 
     u8x8.setFont(u8x8_font_chroma48medium8_r);
     u8x8.setCursor(0, 0);
     switch(mode) {
-        case 1:
-            u8x8.print("temp/humid");
+        case 1: {
+            float temp = dht.readTemperature();
+            u8x8.print("Temperature: ");
+            u8x8.print(temp);
+            u8x8.print("C");
+            u8x8.setCursor(0, 20);
+            float humid = dht.readTemperature();
+            u8x8.print("Humidity: ");
+            u8x8.print(humid);
+            u8x8.print("%");
             break;
-        case 2:
-            u8x8.print("air pressure");
+        }
+        case 2: {
+            float pressure = bmp280.getPressure();
+            u8x8.print("Air pressure: ");
+            u8x8.print(pressure);
+            u8x8.print("Pa");
             break;
-        case 3:
-            u8x8.print("light/sound");
+        }
+        case 3: {
+            int sound_state = analogRead(SOUNDPIN);
+            int light_state = analogRead(LIGHTPIN);
+            u8x8.print("Noise level: ");
+            u8x8.print(sound_state);
+            u8x8.setCursor(0, 20);
+            u8x8.print("Light level: ");
+            u8x8.print(light_state);
             break;
+        }
         default:
             u8x8.print("Error: reached default case");
     }
+    u8x8.refreshDisplay();
 
-    // delay(1000); // one second delay
+    delay(1000); // one second delay
 }
