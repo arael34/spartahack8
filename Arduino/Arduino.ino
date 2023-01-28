@@ -15,8 +15,8 @@ Mode 4: acceleration MAYBE
 // check pins every time
 #define BUTTONPIN 6
 #define DHTPIN 3
-#define SOUNDPIN 2
-#define LIGHTPIN 6
+#define SOUNDPIN 162
+#define LIGHTPIN 166
 #define DHTTYPE DHT11
 // #define ROTARYPIN 160
 // #define LEDPIN 3
@@ -52,13 +52,7 @@ void loop() {
   int button_state = digitalRead(BUTTONPIN);
   // int rotary_value = analogRead(ROTARYPIN) % 4;
   if (button_state != previous_button_state && button_state == HIGH) {
-    // could be cleaned up with ternary
-    if (mode < MODECOUNT) {
-      ++mode;
-    }
-    else {
-      mode = 1;
-    }
+    mode = mode < MODECOUNT ? mode + 1 : 1;
     u8x8.clear();
   }
 
