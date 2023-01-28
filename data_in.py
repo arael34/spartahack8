@@ -1,6 +1,8 @@
 import serial
 import time
 
+from .twiliomessage import check_temp
+
 arduinoData = serial.Serial('COM7', 9600)
 
 while True:
@@ -10,8 +12,5 @@ while True:
         # need to read line by line, careful
         temps = map(float, line.split('\n'))
         for temp in temps:
-            if temp > 60: # arbitrary
-                break # twilio too hot
-            elif temp < 0:
-                break # twilio too cold
+            check_temp(temp)
     

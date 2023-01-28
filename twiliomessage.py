@@ -3,20 +3,24 @@ auth_token = 'bf3d9c39e09188676c9705700d595eb2'
 twilio_number = '+18446506305'
 target_number = '+15179803378'
 
-temperature = 38
+def check_temp(temp):
+    from twilio.rest import Client
+    client = Client(account_sid_v, auth_token)
 
-from twilio.rest import Client
-
-client = Client(account_sid_v, auth_token)
-
-def high_temperature():
-    if temperature < 42:
+    if temp < 0:
         client.messages.create(
-        body="This is a temperature warning - your room has reached an abnormally high reading of: " + str(temperature),
-        from_ = twilio_number,
-        to = target_number
+            body="This is a temperature warning - your room has reached an abnormally low reading of: " + str(temp),
+            from_ = twilio_number,
+            to = target_number
         )
-        print('temperature message sent')
+        print('cold message sent')
+    elif temp > 60:
+        client.messages.create(
+            body="This is a temperature warning - your room has reached an abnormally high reading of: " + str(temp),
+            from_ = twilio_number,
+            to = target_number
+        )
+        print('heat message sent')
 
 def change_number(changed_value):
     target_number = changed_value
