@@ -14,6 +14,7 @@ Mode 4: acceleration MAYBE
 
 // check pins for all
 #define BUTTONPIN 214
+#define ROTARYPIN 160
 #define DHTPIN 211
 #define SOUNDPIN 162
 #define LIGHTPIN 166
@@ -26,8 +27,7 @@ U8X8_SSD1306_128X64_ALT0_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
 DHT dht(DHTPIN, DHTTYPE);
 BMP280 bmp280;
 
-int button_state = 0;
-uint32_t mode = 1;
+// uint32_t mode = 1;
 
 void setup() {
     // pin modes
@@ -48,7 +48,8 @@ void setup() {
 }
 
 void loop() {
-    button_state = digitalRead(BUTTONPIN);
+    int button_state = digitalRead(BUTTONPIN);
+    int rotary_value = analogRead(ROTARYPIN) % 4;
 
     if (button_state == HIGH) {
         if (mode < MODECOUNT) {
@@ -61,7 +62,7 @@ void loop() {
 
     u8x8.setFont(u8x8_font_chroma48medium8_r);
     u8x8.setCursor(0, 0);
-    switch(mode) {
+    switch(rotary_value) {
         case 1: {
             float temp = dht.readTemperature();
             u8x8.print("Temperature: ");
