@@ -28,7 +28,6 @@ DHT dht(DHTPIN, DHTTYPE);
 BMP280 bmp280;
 
 uint32_t mode = 1;
-uint32_t last_mode = 1;
 
 void setup() {
     // pin modes
@@ -59,6 +58,7 @@ void loop() {
         } else {
             mode = 1;
         }
+        u8x8.clear();
         delay(500);
     }
 
@@ -66,7 +66,6 @@ void loop() {
     u8x8.setCursor(0, 0);
     float temp = dht.readTemperature();
     Serial.println(temp);
-    last_mode != mode && u8x8.clear();
     switch(mode) {
         case 1: {
             u8x8.print("Temp: ");
@@ -102,6 +101,5 @@ void loop() {
     }
     u8x8.refreshDisplay();
 
-    last_mode = mode;
     delay(1000); // one second delay
 }
