@@ -13,6 +13,6 @@ def main():
             for temp in temps:
                 check_temp(temp)
         # add a delay
-        
+
 if __name__ == '__main__':
     main()
