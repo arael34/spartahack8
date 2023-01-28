@@ -1,11 +1,15 @@
-account_sid_v = 'AC536d3cc75c7b11f0ee561f4d7d0d3057'
-auth_token = 'bf3d9c39e09188676c9705700d595eb2'
-twilio_number = '+18446506305'
-target_number = '+15179803378'
+account_sid_v = 'pl'
+auth_token = 'pl'
+twilio_number = '+pl'
+target_number = '+pl'
 
 temperature = 38
 
+import mimetypes
+import os
 from twilio.rest import Client
+from flask import Flask, request, redirect
+from twilio.twiml.messaging_response import MessagingResponse
 
 client = Client(account_sid_v, auth_token)
 
@@ -16,8 +20,18 @@ def high_temperature():
         from_ = twilio_number,
         to = target_number
         )
-        print('temperature message sent')
+        return 'temperature message sent'
 
 def change_number(changed_value):
     target_number = changed_value
     print('target number has changed')
+app = Flask(__name__)
+
+@app.route("/sms", methods=['GET', 'POST'])
+
+def sms_reply():
+    body =  request.values.get('Body')
+    return str(body)
+
+if __name__ == '__main__':
+    app.run(debug=True)
