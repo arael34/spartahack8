@@ -1,18 +1,22 @@
 #include <Arduino.h>
-#include <U8x8lib.h>
-#include "DHT.h" // manually installed DHT lib
+#include <Wire.h>
+#include <U8x8lib.h> // OLED
+#include "DHT.h" // temp/humidity
+#include "Seeed_BMP280.h" // air pressure
 
 /*
-Mode 1: temperature/humidity display
+Mode 1: temperature/humidity
 Mode 2: air pressure
-Mode 3: acceleration
-Mode 4: light/sound level
+Mode 3: light/sound level
+Mode 4: acceleration MAYBE
 */
-#define MODECOUNT 4
+#define MODECOUNT 3
 
 // check pins for all
 #define BUTTONPIN D6
 #define DHTPIN D3
+#define SOUNDPIN A2
+#define LIGHTPIN A6
 #define DHTTYPE DHT11
 // #define LEDPIN 3
 
@@ -20,6 +24,7 @@ Mode 4: light/sound level
 U8X8_SSD1306_128X64_ALT0_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
 
 DHT dht(DHTPIN, DHTTYPE);
+BMP280 bmp280;
 
 int button_state = 0;
 uint32_t mode = 1;
@@ -35,6 +40,9 @@ void setup() {
     u8x8.begin();
     u8x8.setPowerSave(0);
     u8x8.setFlipMode(1);
+    if (!bmp280.init()) {
+        Serial.println("air pressure device not connected or broken");
+    }
 }
 
 void loop() {
@@ -49,6 +57,11 @@ void loop() {
         delay(1000);
     } 
 
+    // int sound_state = analogRead(SOUNDPIN);
+    // int light_state = analogRead(LIGHTPIN);
+
+    // float pressure; bmp280.getTemperature();
+
     u8x8.setFont(u8x8_font_chroma48medium8_r);
     u8x8.setCursor(0, 0);
     switch(mode) {
@@ -59,9 +72,6 @@ void loop() {
             u8x8.print("air pressure");
             break;
         case 3:
-            u8x8.print("acc");
-            break;
-        case 4:
             u8x8.print("light/sound");
             break;
         default:
