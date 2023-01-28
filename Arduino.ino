@@ -52,19 +52,14 @@ void loop() {
     int rotary_value = analogRead(ROTARYPIN) % 4;
 
     if (button_state == HIGH) {
-        if (mode < MODECOUNT) {
-            ++mode;
-        } else {
-            mode = 1;
-        } // this could be cleaner with ternary
-        delay(1000);
     }
 
     u8x8.setFont(u8x8_font_chroma48medium8_r);
     u8x8.setCursor(0, 0);
+    float temp = dht.readTemperature();
+    Serial.println(temp);
     switch(rotary_value) {
         case 1: {
-            float temp = dht.readTemperature();
             u8x8.print("Temperature: ");
             u8x8.print(temp);
             u8x8.print("C");
