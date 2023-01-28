@@ -8,12 +8,13 @@
 Mode 1: temperature/humidity
 Mode 2: air pressure
 Mode 3: light/sound level
+Mode 4: acceleration MAYBE
 */
 #define MODECOUNT 3
 
-// pins will frequently be different
-#define BUTTONPIN 214
-#define DHTPIN 211
+// check pins for all
+#define BUTTONPIN 6
+#define DHTPIN 3
 #define SOUNDPIN 162
 #define LIGHTPIN 166
 #define DHTTYPE DHT11
@@ -27,7 +28,7 @@ DHT dht(DHTPIN, DHTTYPE);
 BMP280 bmp280;
 
 uint32_t mode = 1;
-
+int previous_button_state = 0;
 void setup() {
     // pin modes
     pinMode(BUTTONPIN, INPUT);
@@ -44,22 +45,24 @@ void setup() {
     if (!bmp280.init()) {
         Serial.println("air pressure device not connected or broken");
     }
+    
 }
 
 void loop() {
-    int button_state = digitalRead(BUTTONPIN);
+  int button_state = digitalRead(BUTTONPIN);
+  if (button_state != previous_button_state){
     // int rotary_value = analogRead(ROTARYPIN) % 4;
-
-    if (button_state == HIGH) {
+      if (button_state == HIGH) {
         // could be cleaned up with ternary
-        if (mode < MODECOUNT) {
+          if (mode < MODECOUNT) {
             ++mode;
-        } else {
+            u8x8.clear();
+        }
+          else {
             mode = 1;
         }
-        u8x8.clear();
-        delay(500);
-    }
+        }
+  }
 
     u8x8.setFont(u8x8_font_chroma48medium8_r);
     u8x8.setCursor(0, 0);
@@ -80,7 +83,6 @@ void loop() {
         case 2: {
             float pressure = bmp280.getPressure();
             u8x8.print("Pressure: ");
-            u8x8.setCursor(0, 25);
             u8x8.print(pressure);
             u8x8.print("Pa");
             break;
@@ -99,6 +101,6 @@ void loop() {
             u8x8.print("Error: reached default case");
     }
     u8x8.refreshDisplay();
-
-    delay(1000); // one second delay
+       delay(50);
+       previous_button_state = button_state;   
 }
