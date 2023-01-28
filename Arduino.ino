@@ -13,10 +13,10 @@ Mode 4: acceleration MAYBE
 #define MODECOUNT 3
 
 // check pins for all
-#define BUTTONPIN D6
-#define DHTPIN D3
-#define SOUNDPIN A2
-#define LIGHTPIN A6
+#define BUTTONPIN 214
+#define DHTPIN 211
+#define SOUNDPIN 162
+#define LIGHTPIN 166
 #define DHTTYPE DHT11
 // #define LEDPIN 3
 
@@ -46,7 +46,7 @@ void setup() {
 }
 
 void loop() {
-    buttonstate = digitalRead(BUTTONPIN);
+    button_state = digitalRead(BUTTONPIN);
 
     if (button_state == HIGH) {
         if (mode < MODECOUNT) {
