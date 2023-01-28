@@ -28,6 +28,7 @@ DHT dht(DHTPIN, DHTTYPE);
 BMP280 bmp280;
 
 uint32_t mode = 1;
+uint32_t last_mode = 1;
 
 void setup() {
     // pin modes
@@ -58,18 +59,20 @@ void loop() {
         } else {
             mode = 1;
         }
+        delay(500);
     }
 
     u8x8.setFont(u8x8_font_chroma48medium8_r);
     u8x8.setCursor(0, 0);
     float temp = dht.readTemperature();
     Serial.println(temp);
+    last_mode != mode && u8x8.clear();
     switch(mode) {
         case 1: {
             u8x8.print("Temp: ");
             u8x8.print(temp);
             u8x8.print("C");
-            u8x8.setCursor(0, 50);
+            u8x8.setCursor(0, 25);
             float humid = dht.readTemperature();
             u8x8.print("Humidity: ");
             u8x8.print(humid);
@@ -79,6 +82,7 @@ void loop() {
         case 2: {
             float pressure = bmp280.getPressure();
             u8x8.print("Pressure: ");
+            u8x8.setCursor(0, 25);
             u8x8.print(pressure);
             u8x8.print("Pa");
             break;
@@ -88,7 +92,7 @@ void loop() {
             int light_state = analogRead(LIGHTPIN);
             u8x8.print("Noise level: ");
             u8x8.print(sound_state);
-            u8x8.setCursor(0, 50);
+            u8x8.setCursor(0, 25);
             u8x8.print("Light level: ");
             u8x8.print(light_state);
             break;
@@ -98,5 +102,6 @@ void loop() {
     }
     u8x8.refreshDisplay();
 
+    last_mode = mode;
     delay(1000); // one second delay
 }
