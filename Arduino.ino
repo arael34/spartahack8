@@ -14,11 +14,11 @@ Mode 4: acceleration MAYBE
 
 // check pins for all
 #define BUTTONPIN 214
-#define ROTARYPIN 160
 #define DHTPIN 211
 #define SOUNDPIN 162
 #define LIGHTPIN 166
 #define DHTTYPE DHT11
+// #define ROTARYPIN 160
 // #define LEDPIN 3
 
 // OLED display
@@ -27,7 +27,7 @@ U8X8_SSD1306_128X64_ALT0_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
 DHT dht(DHTPIN, DHTTYPE);
 BMP280 bmp280;
 
-// uint32_t mode = 1;
+uint32_t mode = 1;
 
 void setup() {
     // pin modes
@@ -49,21 +49,27 @@ void setup() {
 
 void loop() {
     int button_state = digitalRead(BUTTONPIN);
-    int rotary_value = analogRead(ROTARYPIN) % 4;
+    // int rotary_value = analogRead(ROTARYPIN) % 4;
 
     if (button_state == HIGH) {
+        // could be cleaned up with ternary
+        if (mode < MODECOUNT) {
+            ++mode;
+        } else {
+            mode = 1;
+        }
     }
 
     u8x8.setFont(u8x8_font_chroma48medium8_r);
     u8x8.setCursor(0, 0);
     float temp = dht.readTemperature();
     Serial.println(temp);
-    switch(rotary_value) {
+    switch(mode) {
         case 1: {
-            u8x8.print("Temperature: ");
+            u8x8.print("Temp: ");
             u8x8.print(temp);
             u8x8.print("C");
-            u8x8.setCursor(0, 20);
+            u8x8.setCursor(0, 50);
             float humid = dht.readTemperature();
             u8x8.print("Humidity: ");
             u8x8.print(humid);
@@ -72,7 +78,7 @@ void loop() {
         }
         case 2: {
             float pressure = bmp280.getPressure();
-            u8x8.print("Air pressure: ");
+            u8x8.print("Pressure: ");
             u8x8.print(pressure);
             u8x8.print("Pa");
             break;
@@ -82,7 +88,7 @@ void loop() {
             int light_state = analogRead(LIGHTPIN);
             u8x8.print("Noise level: ");
             u8x8.print(sound_state);
-            u8x8.setCursor(0, 20);
+            u8x8.setCursor(0, 50);
             u8x8.print("Light level: ");
             u8x8.print(light_state);
             break;
