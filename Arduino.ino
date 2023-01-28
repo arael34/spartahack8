@@ -8,11 +8,10 @@
 Mode 1: temperature/humidity
 Mode 2: air pressure
 Mode 3: light/sound level
-Mode 4: acceleration MAYBE
 */
 #define MODECOUNT 3
 
-// check pins for all
+// pins will frequently be different
 #define BUTTONPIN 214
 #define DHTPIN 211
 #define SOUNDPIN 162
