@@ -28,10 +28,10 @@ while True:
 ```
 This data can then be processed. Finally, we used the Twilio API and Ngrok to send and receive messages. 
 ## Challenges we ran into
-The biggest challenge was that we only had one Arduino board so only one person could effectively test their code at a time. This was pretty inconvenient and we had to frequently swap laptops. The port numbers were also different on each computer. Overall, workflow was our greatest challenge. 
+The biggest challenge was that we only had one Arduino board so only one person could effectively test their code at a time. This was pretty inconvenient and we had to frequently swap laptops, which had different port numbers. Testing text messages was difficult as well. T-mobile starts blocking messages if it detects spam and Twilio is sometimes detected as such. Overall, workflow was our greatest challenge. 
 ## Accomplishments that we're proud of
 This was the first hackathon for all of us, so we're proud to have created a somewhat coherent project without any ideas going in. For the most part, it works as intended. 
 ## What we learned
-We learned a lot about reading, processing and sending data to a server. This is important because we want users to be able to communicate with the device from their phones. 
+We learned a lot about reading, processing and sending data to a server. This is important because we want users to be able to communicate with the device from their phones. We also learned how to use many python libraries. 
 ## What's next for our project
 A feature that we wanted to add but didn't have the time for was a much better user experience. Right now, most of our intended functionality was implemented, but it's difficult to use without reading documentation. A userauth system and better ux are next.
