@@ -1,7 +1,6 @@
 LAST TASKS
-- configure server to send noise level data
+- LIGHT LEVEL LAST DIGIT solutions: make it a float or add a zero in the fronts
 
-could be nice
-- flask backend webpage?? with db ?
+could be nices
 - just have one runnable python file
 - migrate to google cloud

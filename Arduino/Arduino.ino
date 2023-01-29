@@ -80,19 +80,20 @@ void loop() {
     }
     case 2: {
       float pressure = bmp280.getPressure();
-      u8x8.print("Pressure: ");
+      u8x8.print("Pressure:");
       u8x8.setCursor(0, 25);
       u8x8.print(pressure);
       u8x8.print("Pa");
       break;
     }
     case 3: {
-      float light_state = static_cast<float>(analogRead(LIGHTPIN));
-      u8x8.print("Noise lv: ");
+      int light_state = analogRead(LIGHTPIN);
+      u8x8.print("Noise: ");
       u8x8.print(sound_state);
       u8x8.print("dB");
-      u8x8.setCursor(0, 50);
-      u8x8.print("Light lv: ");
+      u8x8.setCursor(0, 25);
+      u8x8.print("Light: ");
+      light_state < 100 && u8x8.print("0");
       u8x8.print(light_state);
       break;
     }
