@@ -1,3 +1,6 @@
+latest_temp = 0
+# latest_soundlevel = 0
+
 def main():
     import serial
     import time
@@ -10,8 +13,15 @@ def main():
             # print(line) # for debugging
             temps = map(float, line.split('\n\n'))
             for temp in temps:
+                latest_temp = temp
                 check_temp(temp)
         time.sleep(1)
+
+def get_temp():
+    return latest_temp
+
+# def get_soundlevel():
+#     return latest_soundlevel
 
 if __name__ == '__main__':
     main()

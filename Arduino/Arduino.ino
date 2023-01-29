@@ -66,7 +66,7 @@ void loop() {
       u8x8.print(temp);
       u8x8.print("C");
       u8x8.setCursor(0, 25);
-      float humid = dht.readTemperature();
+      float humid = dht.readHumidity();
       u8x8.print("Humidity: ");
       u8x8.print(humid);
       u8x8.print("%");
@@ -81,8 +81,8 @@ void loop() {
       break;
     }
     case 3: {
-      int sound_state = analogRead(SOUNDPIN);
       int light_state = analogRead(LIGHTPIN);
+      int sound_state = analogRead(SOUNDPIN);
       u8x8.print("Noise level: ");
       u8x8.print(sound_state);
       u8x8.setCursor(0, 25);
