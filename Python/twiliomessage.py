@@ -1,9 +1,14 @@
-account_sid_v = 'pl'
-auth_token = 'pl'
-twilio_number = 'pl'
-target_number = 'pl'
-
 def check_temp(temp):
+    account_sid_v, auth_token, twilio_number, target_number = '', '', '', ''
+
+    with open('tokens.txt', 'r') as tokenfile:
+        lines = [line.rstrip('\n') for line in tokenfile]
+        try:
+            account_sid_v, auth_token, twilio_number, target_number = lines[0], lines[1], lines[2], lines[3]
+        except:
+            print('Error: Invalid tokens.txt format!')
+            return
+
     from twilio.rest import Client
     client = Client(account_sid_v, auth_token)
 
@@ -23,5 +28,6 @@ def check_temp(temp):
         print('heat message sent')
 
 def change_number(changed_value):
-    target_number = changed_value
+    # TODO
+    # target_number = changed_value # change .txt file
     print('target number has changed')
