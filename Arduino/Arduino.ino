@@ -15,8 +15,8 @@ Mode 4: acceleration MAYBE
 // check pins every time
 #define BUTTONPIN 6
 #define DHTPIN 3
-#define SOUNDPIN 162
-#define LIGHTPIN 166
+#define SOUNDPIN A2
+#define LIGHTPIN A6
 #define DHTTYPE DHT11
 #define CALIBRATION_DB 90
 #define CALIBRATION_READING 230
