@@ -1,6 +1,6 @@
 from flask import Flask, Response, request
 from twilio.twiml.messaging_response import MessagingResponse
-from data_in import get_temp #, get_soundlevel
+from data_in import get_temp, get_soundlevel
 
 app = Flask(__name__)
 
@@ -10,9 +10,9 @@ def sms_reply():
     msg = ''
 
     if body == 'temperature':
-        msg = str(get_temp)
-    # elif body == 'sound':
-    #     msg = 'TODO: sound level'
+        msg = get_temp()
+    elif body == 'sound':
+        msg = get_soundlevel()
     else:
         msg = 'Unrecognized command. Request either temperature("temperature") or sound level("sound")'
     

@@ -18,6 +18,8 @@ Mode 4: acceleration MAYBE
 #define SOUNDPIN 162
 #define LIGHTPIN 166
 #define DHTTYPE DHT11
+#define CALIBRATION_DB 90
+#define CALIBRATION_READING 230
 // #define ROTARYPIN 160
 // #define LEDPIN 3
 
@@ -59,7 +61,10 @@ void loop() {
   u8x8.setFont(u8x8_font_chroma48medium8_r);
   u8x8.setCursor(0, 0);
   float temp = dht.readTemperature();
-  Serial.println(temp);
+  Serial.print(temp);
+  Serial.print(" ");
+  int sound_state = CALIBRATION_DB + 20 * log(static_cast<float>(analogRead(SOUNDPIN)) / CALIBRATION_READING);
+  Serial.println(sound_state);
   switch(mode) {
     case 1: {
       u8x8.print("Temp: ");
@@ -82,9 +87,9 @@ void loop() {
     }
     case 3: {
       int light_state = analogRead(LIGHTPIN);
-      int sound_state = analogRead(SOUNDPIN);
       u8x8.print("Noise level: ");
       u8x8.print(sound_state);
+      u8x8.print("dB");
       u8x8.setCursor(0, 25);
       u8x8.print("Light level: ");
       u8x8.print(light_state);

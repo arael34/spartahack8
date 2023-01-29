@@ -1,8 +1,7 @@
 LAST TASKS
-- configure server to send response texts
-- def change_number() in twiliomessage.py
+- configure server to send noise level data
 
 could be nice
-- setup.py script to set phone number
+- flask backend webpage?? with db ?
 - just have one runnable python file
 - migrate to google cloud

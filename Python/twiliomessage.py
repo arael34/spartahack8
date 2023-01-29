@@ -41,6 +41,10 @@ def check_temp(temp):
         time.sleep(60)
 
 def change_number(changed_value):
-    # TODO
-    # target_number = changed_value # change .txt file
+    lines = []
+    with open('tokens.txt', 'r') as tokenfile:
+        lines = tokenfile.readlines()
+    lines[3] = changed_value + '\n'
+    with open('tokens.txt', 'w') as tokenfile:
+        tokenfile.writelines(lines)
     print('target number has changed')
