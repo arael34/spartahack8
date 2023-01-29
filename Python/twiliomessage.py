@@ -1,3 +1,13 @@
+"""
+To use the twilio API a account SID, auth token, twilio phone number,
+and target number must be defined in a "tokens.txt" file, each on a separate
+line and in that order. 
+ex. tokens.txt
+{account SID}
+{auth token}
++1 {twilio phone number}
++1 {target phone number}
+"""
 def check_temp(temp):
     account_sid_v, auth_token, twilio_number, target_number = '', '', '', ''
 
@@ -9,6 +19,7 @@ def check_temp(temp):
             print('Error: Invalid tokens.txt format!')
             return
 
+    import time
     from twilio.rest import Client
     client = Client(account_sid_v, auth_token)
 
@@ -19,6 +30,7 @@ def check_temp(temp):
             to = target_number
         )
         print('cold message sent')
+        time.sleep(60)
     elif temp > 60:
         client.messages.create(
             body="This is a temperature warning - your room has reached an abnormally high reading of: " + str(temp),
@@ -26,6 +38,7 @@ def check_temp(temp):
             to = target_number
         )
         print('heat message sent')
+        time.sleep(60)
 
 def change_number(changed_value):
     # TODO
