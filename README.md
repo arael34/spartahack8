@@ -20,7 +20,7 @@ Serial.println(temp);
 The code snippet above uses the DHT reader to measure the current temperature, in Celsius, as a float. It then prints to the serial port.
 
 We then listen on that port in a python script:
-```py
+```python
 arduinoData = serial.Serial('COM7', 9600)
 while True:
   if arduinoData.inWaiting() > 0:
@@ -30,8 +30,8 @@ This data can then be processed. Finally, we used the Twilio API and Ngrok to se
 ## Challenges we ran into
 The biggest challenge was that we only had one Arduino board so only one person could effectively test their code at a time. This was pretty inconvenient and we had to frequently swap laptops. The port numbers were also different on each computer. Overall, workflow was our greatest challenge. 
 ## Accomplishments that we're proud of
-This was the first hackathon for all of us, so we're proud to have created a somewhat coherent project without any ideas going in. 
+This was the first hackathon for all of us, so we're proud to have created a somewhat coherent project without any ideas going in. For the most part, it works as intended. 
 ## What we learned
-We learned a lot about processing and reading data, as well as hosting a backend. 
-## What's next for Fire Detector
+We learned a lot about reading, processing and sending data to a server. This is important because we want users to be able to communicate with the device from their phones. 
+## What's next for our project
 A feature that we wanted to add but didn't have the time for was a much better user experience. Right now, most of our intended functionality was implemented, but it's difficult to use without reading documentation. A userauth system and better ux are next.

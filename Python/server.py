@@ -1,8 +1,6 @@
 from flask import Flask, Response, request
 from twilio.twiml.messaging_response import MessagingResponse
 
-import data_in
-
 app = Flask(__name__)
 
 @app.route("/sms", methods=['GET', 'POST'])
@@ -10,10 +8,17 @@ def sms_reply():
     body =  request.values.get('Body').lower()
     msg = ''
 
+    import pickle
     if body == 'temperature':
-        msg = 'The current temperature is: ' + str(data_in.latest_temp) + ' C'
+        temperature = 0.
+        with open("temp.p", "rb") as tempfile:
+            temperature = pickle.load(tempfile)
+        msg = 'The current temperature is: ' + str(temperature) + ' C'
     elif body == 'sound':
-        msg = 'The current sound level is: ' + str(data_in.latest_soundlevel) + ' dB'
+        noise = 0
+        with open("noise.p", "rb") as noisefile:
+            noise = pickle.load(noisefile)
+        msg = 'The current sound level is: ' + str(noise) + ' dB'
     else:
         msg = 'Unrecognized command. Request either temperature("temperature") or sound level("sound")'
 
