@@ -10,15 +10,15 @@ def sms_reply():
     msg = ''
 
     if body == 'temperature':
-        msg = get_temp()
+        msg = 'The current temperature is: ' + str(get_temp()) + ' C'
     elif body == 'sound':
-        msg = get_soundlevel()
+        msg = 'The current sound level is: ' + str(get_soundlevel()) + ' dB'
     else:
         msg = 'Unrecognized command. Request either temperature("temperature") or sound level("sound")'
-    
+
     resp = MessagingResponse()
     resp.message(msg)
-    return Response(resp)
+    return Response(str(resp))
 
 if __name__ == '__main__':
     app.run(debug=True)
