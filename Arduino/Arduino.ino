@@ -15,8 +15,8 @@ Mode 4: acceleration MAYBE
 // check pins every time
 #define BUTTONPIN 6
 #define DHTPIN 3
-#define SOUNDPIN 162
-#define LIGHTPIN 166
+#define SOUNDPIN A2
+#define LIGHTPIN A6
 #define DHTTYPE DHT11
 #define CALIBRATION_DB 90
 #define CALIBRATION_READING 230
@@ -72,6 +72,7 @@ void loop() {
       u8x8.print("C");
       u8x8.setCursor(0, 25);
       float humid = dht.readHumidity();
+      u8x8.setCursor(0, 50);
       u8x8.print("Humidity: ");
       u8x8.print(humid);
       u8x8.print("%");
@@ -86,12 +87,12 @@ void loop() {
       break;
     }
     case 3: {
-      int light_state = analogRead(LIGHTPIN);
-      u8x8.print("Noise level: ");
+      float light_state = static_cast<float>(analogRead(LIGHTPIN));
+      u8x8.print("Noise lv: ");
       u8x8.print(sound_state);
       u8x8.print("dB");
-      u8x8.setCursor(0, 25);
-      u8x8.print("Light level: ");
+      u8x8.setCursor(0, 50);
+      u8x8.print("Light lv: ");
       u8x8.print(light_state);
       break;
     }
