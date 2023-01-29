@@ -16,7 +16,7 @@ def main():
                     with open("temp.p", "wb") as tempfile:
                         pickle.dump(latest_temp, tempfile)
                 else:
-                    latest_soundlevel = int(num)
+                    latest_soundlevel = float(num)
                     with open("noise.p", "wb") as noisefile:
                         pickle.dump(latest_soundlevel, noisefile)
                 t = not t
