@@ -87,12 +87,12 @@ void loop() {
     }
     case 3: {
       int light_state = analogRead(LIGHTPIN);
-      u8x8.print("Noise level:");
-      u8x8.setCursor(0, 25);
+      u8x8.print("Noise: ");
       u8x8.print(sound_state);
       u8x8.print("dB");
-      u8x8.setCursor(0, 50);
-      u8x8.print("Light level: ");
+      u8x8.setCursor(0, 25);
+      u8x8.print("Light: ");
+      light_state < 100 && u8x8.print("0");
       u8x8.print(light_state);
       break;
     }
