@@ -72,7 +72,6 @@ void loop() {
       u8x8.print("C");
       u8x8.setCursor(0, 25);
       float humid = dht.readHumidity();
-      u8x8.setCursor(0, 50);
       u8x8.print("Humidity: ");
       u8x8.print(humid);
       u8x8.print("%");
