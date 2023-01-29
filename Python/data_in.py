@@ -1,6 +1,5 @@
 def main():
     import serial
-    import time
     import re
     from twiliomessage import check_temp
 
